@@ -1,8 +1,8 @@
 {
-  "name": "usb-detection",
+  "name": "AndyLau",
   "version": "1.1.0",
   "description": "List USB devices in system and detect changes on them.",
-  "main": "usb-detection.js",
+  "main": "AndyLau.js",
   "dependencies": {
     "bindings": "1.1.0",
     "eventemitter2": ">=0.4.11",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/KABA-CCEAC/node-usb-detection.git"
+    "url": "git://github.com/AMI-NTBU/AndyLau.git"
   },
   "keywords": [
     "usb",
@@ -28,12 +28,12 @@
     "unplug",
     "notification"
   ],
-  "homepage": "https://github.com/KABA-CCEAC/node-usb-detection",
+  "homepage": "https://github.com/AMI-NTBU/AndyLau",
   "bugs": {
-    "url": "https://github.com/KABA-CCEAC/node-usb-detection/issues"
+    "url": "https://github.com/AMI-NTBU/AndyLau/issues"
   },
   "license": {
     "type": "MIT",
-    "url": "https://raw.github.com/KABA-CCEAC/node-usb-detection/master/licence"
+    "url": "https://raw.github.com/AMI-NTBU/AndyLau/master/licence"
   }
 }
