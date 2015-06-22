@@ -277,8 +277,8 @@ void DeviceAdded(void *refCon, io_iterator_t iterator)
             CFRelease(serialNumberAsCFString);
         }
 
-        //if (intialDeviceImport == false)
-        usleep(5000000); //5 sec
+        if (intialDeviceImport == false)
+            usleep(5000000); //5 sec
         
         CFStringRef bsdName = (CFStringRef) IORegistryEntrySearchCFProperty(usbDevice,
                                                                             kIOServicePlane,
