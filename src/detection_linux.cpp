@@ -1,7 +1,10 @@
 #include <libudev.h>
 #include <mntent.h>
 #include <pthread.h>
+#include <pwd.h>
+#include <sys/types.h>
 #include <unistd.h>
+
 
 #include "detection.h"
 #include "deviceList.h"
@@ -412,4 +415,36 @@ void BuildInitialDeviceList()
     }
     /* Free the enumerator object */
     udev_enumerate_unref(enumerate);
+}
+
+void getMountPathFromList(char* mountPath)
+{
+    struct passwd *pw            = getpwuid(getuid());
+    const char    *homedir       = pw->pw_dir;
+    FILE          *fp            = NULL;
+    char          *line          = NULL;
+    char          path[128]      = {};
+    int           ret            = 0;
+    size_t        len            = 0;
+    ssize_t       read           = 0;
+
+    if ((ret = system("lsblk | grep media | awk '{print $7}' | tee ~/usbList")) > 0)
+    {
+        sprintf(path, "%s/usbList", homedir);
+
+        if ((fp = fopen(path, "r")) == NULL)
+        {
+            perror("Error opening file");
+        }
+        else
+        {
+            while ((read = getline(&line, &len, fp)) != -1)
+            {
+                strcpy(mountPath, line);
+                break;
+            }
+            free(line);
+            fclose(fp);
+        }
+    }
 }

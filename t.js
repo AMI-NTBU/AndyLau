@@ -1,4 +1,6 @@
-var monitor = require('./usb-detection');
+var monitor = require('./AndyLau');
+
+console.log(monitor.list());
 
 monitor.find(function(err, devices) {
 	console.log("find: some devices");

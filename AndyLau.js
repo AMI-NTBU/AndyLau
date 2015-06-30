@@ -15,6 +15,7 @@ else
     maxListeners: 1000 // default would be 10!
   });
 
+  detector.list = detection.list;
   detector.find = detection.find;
 
   detection.registerAdded(function(device) {

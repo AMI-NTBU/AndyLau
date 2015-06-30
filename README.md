@@ -42,6 +42,7 @@ monitor.on('change:vid:pid', function(err, devices) {});
 
 # Diff with original
 Add an attribute 'mountPath' to show mounted point on Linux and Mac. ( Windows need someone to fix ).
+Add an function 'list', if there's USB mass storage exist while initialization, return first USB mount path. (supported on Linux only)
 
 # Release Notes
 
