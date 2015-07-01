@@ -323,13 +323,12 @@ void StopMonitoring(const v8::FunctionCallbackInfo<v8::Value>& args)
 
 void List(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
-    char mountPath[128] = {};
-    char *p = mountPath;
-
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
     v8::HandleScope scope(isolate);
 
-    getMountPathFromList(p);
+    char mountPath[128] = {};
+
+    getMountPathFromList(mountPath);
 
     args.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, mountPath));
 }

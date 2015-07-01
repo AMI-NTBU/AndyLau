@@ -428,7 +428,10 @@ void getMountPathFromList(char* mountPath)
     size_t        len            = 0;
     ssize_t       read           = 0;
 
-    if ((ret = system("lsblk | grep media | awk '{print $7}' | tee ~/usbList")) > 0)
+
+    ret = system("lsblk | grep media | awk '{print $7}' | tee ~/usbList");
+    /* dunno why, but fusion always get 0 in this line.. */
+    // if ((ret = system("lsblk | grep media | awk '{print $7}' | tee ~/usbList")) > 0)
     {
         sprintf(path, "%s/usbList", homedir);
 
@@ -440,7 +443,7 @@ void getMountPathFromList(char* mountPath)
         {
             while ((read = getline(&line, &len, fp)) != -1)
             {
-                strcpy(mountPath, line);
+                strncpy(mountPath, line, strlen(line) - 1);
                 break;
             }
             free(line);
