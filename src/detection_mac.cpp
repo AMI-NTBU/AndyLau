@@ -164,6 +164,11 @@ void DeviceRemoved(void *refCon, io_service_t service, natural_t messageType, vo
     }
 }
 
+void getMountPathFromList(char* mountPath)
+{
+
+}
+
 //================================================================================================
 //
 //  DeviceAdded
@@ -294,7 +299,7 @@ void DeviceAdded(void *refCon, io_iterator_t iterator)
             DASessionRef daSession = DASessionCreate(kCFAllocatorDefault);
             
             DADiskRef disk = DADiskCreateFromBSDName(kCFAllocatorDefault, daSession, bsdNameC);
-            
+            //printf("bsdName: %s\n", bsdNameC);   
             if (disk)
             {
                 CFDictionaryRef desc = DADiskCopyDescription(disk);
