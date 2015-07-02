@@ -166,17 +166,21 @@ void DeviceRemoved(void *refCon, io_service_t service, natural_t messageType, vo
 
 void getMountPathFromList(char* mountPath)
 {
-    int     ret       = 0;
-    FILE    *fp       = NULL;
-    char    *line     = NULL;
-    char    path[128] = {};
-    size_t  len       = 0;
-    ssize_t read      = 0;
+    struct passwd *pw       = getpwuid(getuid());
+    const char    *homedir  = pw->pw_dir;
+    FILE          *fp       = NULL;
+    char          *line     = NULL;
+    char          path[128] = {};
+    char          cmd[512]  = {};
+    int           ret       = 0;
+    size_t        len       = 0;
+    ssize_t       read      = 0;
+       
+    sprintf(cmd, "df -lH | grep \"/Volumes/*\" | awk '{print $9}' | /usr/bin/tee %s/usblist", homedir);
+    ret = system(cmd);
     
-    ret = system("df -lH | grep \"/Volumes/*\" | awk '{print $9}' | tee ./usblist");
-    printf("getMountPathFromList ret= %d\n", ret);
     {
-        sprintf(path, "usbList");
+        sprintf(path, "%s/usbList", homedir);
         
         if ((fp = fopen(path, "r")) == NULL)
         {
