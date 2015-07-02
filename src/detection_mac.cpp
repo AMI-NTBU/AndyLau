@@ -166,7 +166,33 @@ void DeviceRemoved(void *refCon, io_service_t service, natural_t messageType, vo
 
 void getMountPathFromList(char* mountPath)
 {
-
+    int     ret       = 0;
+    FILE    *fp       = NULL;
+    char    *line     = NULL;
+    char    path[128] = {};
+    size_t  len       = 0;
+    ssize_t read      = 0;
+    
+    ret = system("df -lH | grep \"/Volumes/*\" | awk '{print $9}' | tee ./usblist");
+    printf("getMountPathFromList ret= %d\n", ret);
+    {
+        sprintf(path, "usbList");
+        
+        if ((fp = fopen(path, "r")) == NULL)
+        {
+            perror("Error opening file");
+        }
+        else
+        {
+            while ((read = getline(&line, &len, fp)) != -1)
+            {
+                strncpy(mountPath, line, strlen(line) - 1);
+                break;
+            }
+            free(line);
+            fclose(fp);
+        }
+    }
 }
 
 //================================================================================================
