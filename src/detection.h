@@ -22,7 +22,7 @@ void StartMonitoring(const v8::FunctionCallbackInfo<v8::Value>& args);
 void Start();
 void StopMonitoring(const v8::FunctionCallbackInfo<v8::Value>& args);
 void Stop();
-void getMountPathFromList(char* mountPath);
+void getMountPathFromList(std::string (&str)[16], int &size);
 
 
 struct ListBaton

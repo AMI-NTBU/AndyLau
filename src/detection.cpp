@@ -325,12 +325,20 @@ void List(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
     v8::HandleScope scope(isolate);
+    v8::Local<v8::Array> list = v8::Array::New(isolate);
 
-    char mountPath[128] = {};
+    std::string usbList[16];
+    int size = 0;
 
-    getMountPathFromList(mountPath);
+    getMountPathFromList(usbList, size);
+    for (int i = 0; i < size; i++)
+    {
+        v8::Local<v8::Object> obj = v8::Object::New(isolate);
+        obj->Set(v8::String::NewFromUtf8(isolate, "mountPath"), v8::String::NewFromUtf8(isolate, usbList[i].c_str()));
+        list->Set(i, obj);
+    }
 
-    args.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, mountPath));
+    args.GetReturnValue().Set(list);
 }
 
 extern "C" {

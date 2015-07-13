@@ -417,7 +417,7 @@ void BuildInitialDeviceList()
     udev_enumerate_unref(enumerate);
 }
 
-void getMountPathFromList(char* mountPath)
+void getMountPathFromList(std::string (&str)[16], int &size)
 {
     struct passwd *pw            = getpwuid(getuid());
     const char    *homedir       = pw->pw_dir;
@@ -443,8 +443,8 @@ void getMountPathFromList(char* mountPath)
         {
             while ((read = getline(&line, &len, fp)) != -1)
             {
-                strncpy(mountPath, line, strlen(line) - 1);
-                break;
+                line[read - 1] = '\0';
+                str[size++] = line;
             }
             free(line);
             fclose(fp);
