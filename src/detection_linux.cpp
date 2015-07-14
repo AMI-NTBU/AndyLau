@@ -419,22 +419,23 @@ void BuildInitialDeviceList()
 
 void getMountPathFromList(std::string (&str)[16], int &size)
 {
-    struct passwd *pw            = getpwuid(getuid());
-    const char    *homedir       = pw->pw_dir;
-    FILE          *fp            = NULL;
-    char          *line          = NULL;
-    char          path[128]      = {};
-    int           ret            = 0;
-    size_t        len            = 0;
-    ssize_t       read           = 0;
+    struct passwd *pw       = getpwuid(getuid());
+    const char    *homedir  = pw->pw_dir;
+    FILE          *fp       = NULL;
+    char          *line     = NULL;
+    char          path[128] = {};
+    char          cmd[512]  = {};
+    int           ret       = 0;
+    size_t        len       = 0;
+    ssize_t       read      = 0;
 
 
-    ret = system("lsblk | grep media | awk '{print $7}' | tee ~/usbList");
+    sprintf(path, "%s/usbList", homedir);
+    sprintf(cmd, "/bin/lsblk | /bin/grep media | /usr/bin/awk '{print $7}' | /usr/bin/tee %s", path);
+    ret = system(cmd);
     /* dunno why, but fusion always get 0 in this line.. */
     // if ((ret = system("lsblk | grep media | awk '{print $7}' | tee ~/usbList")) > 0)
     {
-        sprintf(path, "%s/usbList", homedir);
-
         if ((fp = fopen(path, "r")) == NULL)
         {
             perror("Error opening file");
